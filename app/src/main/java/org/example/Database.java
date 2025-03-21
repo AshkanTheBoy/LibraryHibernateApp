@@ -1,10 +1,6 @@
 import java.util.Set;
 import java.util.HashSet;
 import java.util.List;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -14,11 +10,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Interceptor;
 import org.hibernate.EmptyInterceptor;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
 public final class Database{
-    private static Database INSTANCE;//single instance - singleton
+    private  static volatile Database INSTANCE;//single instance - singleton
 
     private final Set<String> tables;//i thought that using set's is more efficient, than lists
     private final SessionFactory sessionFactory;//single sessionFactory
@@ -27,7 +20,7 @@ public final class Database{
     private int tableIndex = 0;//incrementing index for naming tables
     private String currentTable;//currently selected table field
 
-    private Database() throws SQLException {
+    private Database() {
         INSTANCE = this;
         tables = new HashSet<>();
         interceptor = new TableInterceptor();
@@ -39,12 +32,8 @@ public final class Database{
 
     public static Database getDatabase() {
         if (INSTANCE==null){
-            try {
-                INSTANCE = new Database();
-                return INSTANCE;
-            } catch (SQLException e){
-                System.out.println(e.getMessage());
-            }
+            INSTANCE = new Database();
+            return INSTANCE;
         }
         return null;
     }

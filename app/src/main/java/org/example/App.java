@@ -8,9 +8,8 @@ import java.io.IOException;
  *  1 - Create many identical tables, which will hold their own data.
  *  2 - Manipulate each table's contents, such as: adding, editing, deleting or selecting(printing to the console).
  * The database is in-memory, so, all data will be erased after closing this app.
- * The tables' schema is: | id | name | stock |
- * The DBMS used is SQLite.
- * Only single persistent connection is implemented, because sqlite loses data when making new ones, when the db is in memory.
+ * The tables' schema is: | BOOK_ID | BOOK_NAME | BOOK_STOCK |
+ * The DBMS used is H2.
  */
 
 
